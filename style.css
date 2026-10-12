@@ -1,0 +1,376 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+ body{
+    background-color: #9ad1d4;
+    color: #003249;
+    padding: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.Header{
+    border-radius: 1rem;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.Header h1{
+    color: #003249;
+    font-size: 28px;
+    margin-bottom: 6px;
+}
+.Header p{
+    color: #003249;
+    font-size: 14px;
+}
+
+.canvas-note {
+    font-size: 12px;
+    color: #003249;
+    margin-left: 30px;
+    margin-top: 16px;
+}
+.About-box{
+    padding: 3%;
+    background-color: #003249;
+    color: #ccdbdc;
+    width: 40%;
+    border-radius: 1rem;
+    border: 2px solid #007ea7;
+}
+.About-box h3{
+    margin-bottom: 20px;
+}
+.About-box p{
+    line-height: 1.29;
+    font-size: 15px;
+}
+
+.waveform-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.value-cards {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.value-card {
+    background-color: #007ea7;
+    color: white;
+    border-radius: 1rem;
+    padding: 16px;
+    flex: 1;
+    text-align: center;
+}
+
+.value-card-label {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+}
+
+.value-card-number {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.value-note {
+    font-size: 12px;
+    color: #ccdbdc;
+    line-height: 1.6;
+    margin-top: 10px;
+}
+.About-box {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.about-toggle {
+    width: 220px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toggle-heading {
+    font-size: 13px;
+    color: #80ced7;
+    margin-bottom: 4px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+    accent-color: #007ea7;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.toggle-tagline {
+    font-size: 12px;
+    color: #9ad1d4;
+    line-height: 1.6;
+    margin-top: 10px;
+    border-top: 1px solid #007ea7;
+    padding-top: 10px;
+}
+
+.about-content {
+    flex: 1;
+}
+
+.radio-option{
+    font-size: 20px;
+}
+.Waveform-box{
+    display: flex;
+    flex-direction: column;
+    /* width: 60%; */
+
+}
+
+#resetBtn {
+    background-color: #003249;
+    color: #ccdbdc;
+    border: 2px solid #007ea7;
+    padding: 16px 20px;
+    border-radius: 1rem;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-start;
+    flex-shrink: 0;
+    width: fit-content;
+    margin-right: 40px;
+}
+#resetBtn:hover {
+    background-color: #007ea7;
+    color: #003249;
+}
+
+.Waveform-box h3{
+    margin-left: 30px;
+}
+.Waveform-box p{
+    margin-left: 30px; 
+}
+
+canvas{
+    background-color: #ccdbdc;
+    border: 2px solid #007ea7;
+    margin: 20px;
+    border-radius: 1rem;
+}
+/* Dealing Sliders Now */
+.Range-Labels{
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #007ea7;
+}
+
+.Current-Box, .Voltage-Box{
+    background-color: #ccdbdc;
+    color: #003249 ;
+    padding: 20px;
+    border-radius: 1rem;
+    flex: 1;
+    border: 2px solid #007ea7;
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 12px;
+    width:100%;
+}
+/* styling overall currebt n voltage boxes */
+.Inputs{
+    display: flex;
+    gap: 20px;
+
+}
+
+#ResultBox {
+    background-color: #003249;
+    border: 2px solid #007ea7;
+    color: #ccdbdc;
+    border-radius: 1rem;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+#ResultBox h3{
+    color: #ccdbdc;
+    margin-bottom: 20px;
+}
+.result-item .label{
+    color: #9ad1d4;
+}
+.result-item .value{
+    color: white;
+}
+.note{
+    color: #003249;
+    font-size: 14px;
+}
+.result-description {
+    display: flex;
+    gap: 50px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    margin-left: 20px;
+}
+#Prediction-heading{
+    margin-top: 10px;
+}
+.result-item .label {
+    font-size: 14px;
+    color: #9ad1d4;
+    gap: 200px;
+    margin-bottom: 2px;
+}
+
+.result-item .value {
+    font-size: 14px;
+    font-weight: bold;
+    color: #ccdbdc;
+    margin-top: 10px;
+}
+.Phase-Pill{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 30px;
+}
+.pill {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px 14px;
+    border-radius: 20px;
+
+}
+.label{
+    color: #9ad1d4;
+    margin-top: 50px;
+}
+.phase-status-row{
+    display: flex;
+    /* align-items: flex-start;
+    gap: 10px; */
+    margin-top: 20px;
+}
+.pill.healthy {
+    background-color: #d9f2d0;
+    color: #2c6b1f;
+}
+.pill.faulted {
+    background-color: #fbdada;
+    color: #a32d2d;
+}
+
+.end-note p{
+    padding: 10px;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+.note1{
+    color: #9ad1d4;
+    font-size: 12px;
+    margin-top: 30px;
+}
+.Waveform-prediction-row {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 20px;
+}
+
+.Waveform-prediction-row > div {
+    flex: 1;
+}
+
+
+
+/* making the UI responsive */
+@media (max-width: 700px) {
+    .Inputs,
+    .result-description {
+        flex-direction: column;
+        gap: 16px;
+        margin-left: 0;
+    }
+
+    .About-box,
+    .Waveform-box {
+        width: 100%;
+    }
+
+    canvas {
+        max-width: 100%;
+        height: auto;
+        margin: 20px 0;
+    }
+
+    .Header {
+        text-align: center;
+    }
+
+    .waveform-top-row {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .phase-status-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .About-box{
+        flex-direction: column;
+    }
+    .about-toggle{
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .toggle-tagline{
+        width: 100%;
+    }
+    .Waveform-prediction-row{
+        flex-direction: column;
+    }
+    .value-cards{
+        flex-direction: column;
+    }
+}
+
+.githublink{
+    font-size: 13px;
+    text-align: center;
+    margin-top: 20px;
+}
+.githublink a{
+    text-decoration: none;
+    color: #007ea7;
+}
