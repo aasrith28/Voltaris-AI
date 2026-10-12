@@ -1,4 +1,7 @@
-const API_BASE = import.meta.env.VITE_API_URL ?? "";
+
+const API_BASE =
+  import.meta.env.VITE_API_URL?.trim() ||
+  "https://voltaris-ai-qcwj.onrender.com";
 
 export interface PredictionRequest {
   Ia: number;
@@ -42,76 +45,114 @@ async function request<T>(
   options: RequestInit = {}
 ): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
+    ...options,
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(options.headers ?? {}),
     },
-    ...options,
   });
+
   if (!res.ok) {
-    let detail = res.statusText;
+    let detail: unknown = res.statusText;
+
     try {
       const body = await res.json();
       detail = body.detail ?? JSON.stringify(body);
     } catch {
-      /* ignore */
+      // The response may not contain JSON.
     }
-    throw new Error(typeof detail === "string" ? detail : JSON.stringify(detail));
+
+    throw new Error(
+      typeof detail === "string"
+        ? detail
+        : JSON.stringify(detail)
+    );
   }
+
   return res.json() as Promise<T>;
 }
 
 export const api = {
   health: () =>
-    request<{ status: string; model_ready: boolean }>("/api/v1/health"),
-  modelInfo: () => request<ModelInfo>("/api/v1/predictions/model"),
+    request<{ status: string; model_ready: boolean }>(
+      "/api/v1/health"
+    ),
+
+  modelInfo: () =>
+    request<ModelInfo>("/api/v1/predictions/model"),
+
   predict: (body: PredictionRequest) =>
     request<PredictionResponse>("/api/v1/predictions", {
       method: "POST",
       body: JSON.stringify(body),
     }),
-  register: (email: string, password: string, full_name?: string) =>
-    request<{ message: string; dev_verification_token?: string }>(
-      "/api/v1/auth/register",
-      {
-        method: "POST",
-        body: JSON.stringify({ email, password, full_name }),
-      }
-    ),
+
+  register: (
+    email: string,
+    password: string,
+    full_name?: string
+  ) =>
+    request<{
+      message: string;
+      dev_verification_token?: string;
+    }>("/api/v1/auth/register", {
+      method: "POST",
+      body: JSON.stringify({ email, password, full_name }),
+    }),
+
   verifyEmail: (token: string) =>
     request<{ message: string }>("/api/v1/auth/verify-email", {
       method: "POST",
       body: JSON.stringify({ token }),
     }),
+
   login: (email: string, password: string) =>
     request<Record<string, unknown>>("/api/v1/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }),
+
   logout: () =>
-    request<{ message: string }>("/api/v1/auth/logout", { method: "POST" }),
+    request<{ message: string }>("/api/v1/auth/logout", {
+      method: "POST",
+    }),
+
   me: () =>
-    request<{ id: string; email: string; two_factor_enabled: boolean }>(
-      "/api/v1/auth/me"
-    ),
+    request<{
+      id: string;
+      email: string;
+      two_factor_enabled: boolean;
+    }>("/api/v1/auth/me"),
+
   setup2fa: () =>
     request<{
       secret: string;
       provisioning_uri: string;
       qr_code_base64: string;
       message: string;
-    }>("/api/v1/auth/2fa/setup", { method: "POST" }),
+    }>("/api/v1/auth/2fa/setup", {
+      method: "POST",
+    }),
+
   activate2fa: (code: string) =>
-    request<{ codes: string[]; message: string }>("/api/v1/auth/2fa/activate", {
-      method: "POST",
-      body: JSON.stringify({ code }),
-    }),
+    request<{ codes: string[]; message: string }>(
+      "/api/v1/auth/2fa/activate",
+      {
+        method: "POST",
+        body: JSON.stringify({ code }),
+      }
+    ),
+
   verify2fa: (code: string) =>
-    request<{ message: string; user?: unknown }>("/api/v1/auth/2fa/verify", {
-      method: "POST",
-      body: JSON.stringify({ code }),
-    }),
+    request<{ message: string; user?: unknown }>(
+      "/api/v1/auth/2fa/verify",
+      {
+        method: "POST",
+        body: JSON.stringify({ code }),
+      }
+    ),
+
   recover2fa: (code: string) =>
     request<{ message: string }>("/api/v1/auth/2fa/recover", {
       method: "POST",
