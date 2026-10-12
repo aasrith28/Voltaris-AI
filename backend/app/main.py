@@ -1,3 +1,4 @@
+
 """Voltaris AI FastAPI application entry point."""
 
 from __future__ import annotations
@@ -19,24 +20,30 @@ logging.basicConfig(
 )
 logger = logging.getLogger("voltaris")
 
+FRONTEND_ORIGINS = [
+    "https://voltaris-ai-nine.vercel.app",
+]
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
     logger.info("Starting %s (%s)", settings.app_name, settings.app_env)
 
-    # Create tables (Alembic preferred for production; this supports local SQLite)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
-    logger.info("Database schema ensured")
 
+    logger.info("Database schema ensured")
     load_model()
+
     yield
+
     logger.info("Shutting down")
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
+
     app = FastAPI(
         title=settings.app_name,
         description=(
@@ -50,16 +57,22 @@ def create_app() -> FastAPI:
         openapi_url="/api/openapi.json",
     )
 
-    origins = settings.cors_origin_list
-    if settings.debug and not settings.is_production:
-        # Allow common local dev origins
-        for o in ("http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000"):
-            if o not in origins:
-                origins.append(o)
+    # Include the deployed Vercel frontend and existing configured origins.
+    configured_origins = list(settings.cors_origin_list)
+    origins = list(dict.fromkeys(configured_origins + FRONTEND_ORIGINS))
+
+    if not settings.is_production and settings.debug:
+        for origin in (
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:3000",
+        ):
+            if origin not in origins:
+                origins.append(origin)
 
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=origins if settings.is_production else origins,
+        allow_origins=origins,
         allow_credentials=True,
         allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["*"],
