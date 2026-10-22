@@ -26,8 +26,10 @@ class Settings(BaseSettings):
         default="dev-totp-key-change-in-production!!"
     )
 
-    # Prefer /tmp for local SQLite when the project tree is read-only or restricted
-    database_url: str = "sqlite+aiosqlite:////tmp/voltaris.db"
+    # Database: local SQLite in the backend directory by default, cross-platform
+    database_url: str = Field(
+        default_factory=lambda: f"sqlite+aiosqlite:///{(BASE_DIR / 'voltaris.db').as_posix()}"
+    )
 
     frontend_url: str = "http://localhost:5173"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
